@@ -1,0 +1,121 @@
+PS G:\ai技能库\课程\Week4-Transfomer和BERT、GPT模型\Week04> & E:\Conda\envs\course\python.exe g:/ai技能库/课程/Week4-Transfomer和BERT、GPT模型/Week04/10.2_超参对比.py
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+======================================================================
+超参对比实验：固定 batch_size=16、epochs=3，只改 learning_rate
+======================================================================
+
+######################################################################
+# 第 1 组 / 共 3 组：小学习率  learning_rate=2e-05
+######################################################################
+Loading weights: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 199/199 [00:00<00:00, 11038.08it/s]
+[transformers] BertForSequenceClassification LOAD REPORT from: bert-base-chinese
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.seq_relationship.weight                | UNEXPECTED | 
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.seq_relationship.bias                  | UNEXPECTED | 
+classifier.bias                            | MISSING    | 
+classifier.weight                          | MISSING    | 
+
+Notes:
+- UNEXPECTED:   can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:      those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+{'loss': '1.823', 'grad_norm': '8.481', 'learning_rate': '1.98e-05', 'epoch': '0.4'}                                                                                                
+{'loss': '0.2795', 'grad_norm': '8.207', 'learning_rate': '1.695e-05', 'epoch': '0.8'}                                                                                              
+{'eval_loss': '0.1442', 'eval_accuracy': '0.962', 'eval_runtime': '0.663', 'eval_samples_per_second': '1508', 'eval_steps_per_second': '95.02', 'epoch': '1'}                       
+{'loss': '0.1427', 'grad_norm': '3.294', 'learning_rate': '1.388e-05', 'epoch': '1.2'}                                                                                              
+{'loss': '0.09807', 'grad_norm': '1.111', 'learning_rate': '1.08e-05', 'epoch': '1.6'}                                                                                              
+{'loss': '0.1063', 'grad_norm': '0.2196', 'learning_rate': '7.723e-06', 'epoch': '2'}                                                                                               
+{'eval_loss': '0.1057', 'eval_accuracy': '0.973', 'eval_runtime': '0.6346', 'eval_samples_per_second': '1576', 'eval_steps_per_second': '99.28', 'epoch': '2'}                      
+{'loss': '0.04617', 'grad_norm': '0.1047', 'learning_rate': '4.646e-06', 'epoch': '2.4'}                                                                                            
+{'loss': '0.06602', 'grad_norm': '2.935', 'learning_rate': '1.569e-06', 'epoch': '2.8'}                                                                                             
+{'eval_loss': '0.1043', 'eval_accuracy': '0.974', 'eval_runtime': '0.6354', 'eval_samples_per_second': '1574', 'eval_steps_per_second': '99.15', 'epoch': '3'}                      
+{'train_runtime': '22.31', 'train_samples_per_second': '537.8', 'train_steps_per_second': '33.61', 'train_loss': '0.3451', 'epoch': '3'}                                            
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 750/750 [00:22<00:00, 33.61it/s]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 63/63 [00:00<00:00, 102.17it/s]
+
+######################################################################
+# 第 2 组 / 共 3 组：默认学习率  learning_rate=5e-05
+######################################################################
+Loading weights: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 199/199 [00:00<00:00, 9383.34it/s]
+[transformers] BertForSequenceClassification LOAD REPORT from: bert-base-chinese
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.seq_relationship.weight                | UNEXPECTED | 
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.seq_relationship.bias                  | UNEXPECTED | 
+classifier.bias                            | MISSING    | 
+classifier.weight                          | MISSING    | 
+
+Notes:
+- UNEXPECTED:   can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:      those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+{'loss': '1.352', 'grad_norm': '9.709', 'learning_rate': '4.95e-05', 'epoch': '0.4'}                                                                                                
+{'loss': '0.2375', 'grad_norm': '26.18', 'learning_rate': '4.238e-05', 'epoch': '0.8'}                                                                                              
+{'eval_loss': '0.1598', 'eval_accuracy': '0.954', 'eval_runtime': '0.642', 'eval_samples_per_second': '1558', 'eval_steps_per_second': '98.13', 'epoch': '1'}                       
+{'loss': '0.1535', 'grad_norm': '5.083', 'learning_rate': '3.469e-05', 'epoch': '1.2'}                                                                                              
+{'loss': '0.1079', 'grad_norm': '3.926', 'learning_rate': '2.7e-05', 'epoch': '1.6'}                                                                                                
+{'loss': '0.1244', 'grad_norm': '0.07143', 'learning_rate': '1.931e-05', 'epoch': '2'}                                                                                              
+{'eval_loss': '0.1196', 'eval_accuracy': '0.97', 'eval_runtime': '0.6344', 'eval_samples_per_second': '1576', 'eval_steps_per_second': '99.31', 'epoch': '2'}                       
+{'loss': '0.05315', 'grad_norm': '0.06119', 'learning_rate': '1.162e-05', 'epoch': '2.4'}                                                                                           
+{'loss': '0.04116', 'grad_norm': '0.1923', 'learning_rate': '3.923e-06', 'epoch': '2.8'}                                                                                            
+{'eval_loss': '0.1029', 'eval_accuracy': '0.976', 'eval_runtime': '0.6377', 'eval_samples_per_second': '1568', 'eval_steps_per_second': '98.8', 'epoch': '3'}                       
+{'train_runtime': '22.16', 'train_samples_per_second': '541.4', 'train_steps_per_second': '33.84', 'train_loss': '0.2792', 'epoch': '3'}                                            
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 750/750 [00:22<00:00, 33.84it/s]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 63/63 [00:00<00:00, 101.76it/s]
+
+######################################################################
+# 第 3 组 / 共 3 组：大学习率  learning_rate=0.0001
+######################################################################
+Loading weights: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 199/199 [00:00<00:00, 17293.05it/s]
+[transformers] BertForSequenceClassification LOAD REPORT from: bert-base-chinese
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.seq_relationship.weight                | UNEXPECTED | 
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.seq_relationship.bias                  | UNEXPECTED | 
+classifier.bias                            | MISSING    | 
+classifier.weight                          | MISSING    | 
+
+Notes:
+- UNEXPECTED:   can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:      those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+{'loss': '1.092', 'grad_norm': '9.085', 'learning_rate': '9.9e-05', 'epoch': '0.4'}                                                                                                 
+{'loss': '0.3018', 'grad_norm': '16.79', 'learning_rate': '8.477e-05', 'epoch': '0.8'}                                                                                              
+{'eval_loss': '0.1974', 'eval_accuracy': '0.951', 'eval_runtime': '0.6357', 'eval_samples_per_second': '1573', 'eval_steps_per_second': '99.1', 'epoch': '1'}                       
+{'loss': '0.2047', 'grad_norm': '2.378', 'learning_rate': '6.938e-05', 'epoch': '1.2'}                                                                                              
+{'loss': '0.1811', 'grad_norm': '0.1316', 'learning_rate': '5.4e-05', 'epoch': '1.6'}                                                                                               
+{'loss': '0.183', 'grad_norm': '0.1084', 'learning_rate': '3.862e-05', 'epoch': '2'}                                                                                                
+{'eval_loss': '0.1585', 'eval_accuracy': '0.965', 'eval_runtime': '0.6454', 'eval_samples_per_second': '1549', 'eval_steps_per_second': '97.61', 'epoch': '2'}                      
+{'loss': '0.08827', 'grad_norm': '1.755', 'learning_rate': '2.323e-05', 'epoch': '2.4'}                                                                                             
+{'loss': '0.0762', 'grad_norm': '1.188', 'learning_rate': '7.846e-06', 'epoch': '2.8'}                                                                                              
+{'eval_loss': '0.1492', 'eval_accuracy': '0.968', 'eval_runtime': '0.6265', 'eval_samples_per_second': '1596', 'eval_steps_per_second': '100.6', 'epoch': '3'}                      
+{'train_runtime': '21.97', 'train_samples_per_second': '546.3', 'train_steps_per_second': '34.14', 'train_loss': '0.2883', 'epoch': '3'}                                            
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 750/750 [00:21<00:00, 34.14it/s]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 63/63 [00:00<00:00, 101.43it/s]
+
+
+======================================================================
+【对比结果】固定 batch_size=16、epochs=3，不同 learning_rate 的准确率
+======================================================================
+组别            learning_rate     最终准确率         
+----------------------------------------------
+小学习率          2e-05             0.9740
+默认学习率         5e-05             0.9760
+大学习率          0.0001            0.9680
+----------------------------------------------
+
+最佳配置：默认学习率 (learning_rate=5e-05)，准确率=0.9760
+======================================================================

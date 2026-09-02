@@ -1,0 +1,19 @@
+# 工作要求
+
+我要用基于bert模型，进行微调文本分类，帮我编写训练代码，希望使用torch和transformers库，以及对应的trainer实现保存在当前文件夹下，一切需要下载、缓存的数据都存在与当前要求文件相同目录下，分类新建文件夹保存，完成后输出一个流程图，并输出详细readme.md说明文件，来说明项目结构、使用方法等。
+
+# 给定的数据集
+```
+from datasets import load_dataset
+
+ds = load_dataset("fka/prompts.chat")
+```
+
+# 模型的使用代码是
+```
+from transformers import AutoTokenizer, AutoModelForMaskedLM
+
+tokenizer = AutoTokenizer.from_pretrained("bert-base-chinese", cache_dir="G:\ai技能库\课程\Week4-Transfomer和BERT、GPT模型\作业")
+
+model = AutoModelForMaskedLM.from_pretrained("bert-base-chinese", cache_dir="G:\ai技能库\课程\Week4-Transfomer和BERT、GPT模型\作业")
+```
