@@ -1,0 +1,543 @@
+app:
+  description: 对用户输入的问题，进行拆分，搜索，整理成一份报告
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: workflow
+  name: zzh-deepresearch
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.24@9e12eef09973667f0eaf4f082af883167e1de88740b22e71e71488d020c3778a
+    version: null
+kind: app
+version: 0.6.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 20
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        single_chunk_attachment_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: iteration
+      id: 1789468606145-source-1789468643136-target
+      selected: false
+      source: '1789468606145'
+      sourceHandle: source
+      target: '1789468643136'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1789468643136'
+        sourceType: iteration-start
+        targetType: http-request
+      id: 1789468643136start-source-1789468657523-target
+      selected: false
+      source: 1789468643136start
+      sourceHandle: source
+      target: '1789468657523'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1789468643136'
+        sourceType: http-request
+        targetType: llm
+      id: 1789468657523-source-1789529850191-target
+      selected: false
+      source: '1789468657523'
+      sourceHandle: source
+      target: '1789529850191'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1789468643136'
+        sourceType: llm
+        targetType: variable-aggregator
+      id: 1789529850191-source-1789540245421-target
+      selected: false
+      source: '1789529850191'
+      sourceHandle: source
+      target: '1789540245421'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1789463494112-source-1789468606145-target
+      selected: false
+      source: '1789463494112'
+      sourceHandle: source
+      target: '1789468606145'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: iteration
+        targetType: template-transform
+      id: 1789468643136-source-1789547274332-target
+      selected: false
+      source: '1789468643136'
+      sourceHandle: source
+      target: '1789547274332'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: template-transform
+        targetType: llm
+      id: 1789547274332-source-1789546098253-target
+      selected: false
+      source: '1789547274332'
+      sourceHandle: source
+      target: '1789546098253'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1789546098253-source-1789538678329-target
+      source: '1789546098253'
+      sourceHandle: source
+      target: '1789538678329'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 用户输入
+        type: start
+        variables:
+        - default: ''
+          hint: ''
+          label: research_topic
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: research_topic
+      height: 109
+      id: '1789463494112'
+      position:
+        x: -213.6683984735165
+        y: 308.56346752858065
+      positionAbsolute:
+        x: -213.6683984735165
+        y: 308.56346752858065
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1789463494112'
+          - research_topic
+        model:
+          completion_params:
+            temperature: 0.7
+            thinking: false
+          mode: chat
+          name: deepseek-flash
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 94842170-cdd1-42e6-9939-ddc7c885b692
+          role: system
+          text: '你是一个资深研究员，将对用户的问题进行研究，研究主题：{{#1789463494112.research_topic#}}
+
+
+            对研究主题拆分为3-5个不同的研究方向，将拆分的研究方向以JSON格式输出，格式如下：{"sub_topic":["研究方向1","研究方向2",.......]}'
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              sub_topic:
+                items:
+                  type: string
+                type: array
+            required: []
+            type: object
+        structured_output_enabled: true
+        title: keyword-agent
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1789468606145'
+      position:
+        x: 68.28635441684366
+        y: 329.56346752858065
+      positionAbsolute:
+        x: 68.28635441684366
+        y: 329.56346752858065
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        error_handle_mode: terminated
+        flatten_output: true
+        height: 343
+        is_parallel: false
+        iterator_input_type: object
+        iterator_selector:
+        - '1789468606145'
+        - structured_output
+        - sub_topic
+        output_selector:
+        - '1789540245421'
+        - output
+        output_type: array[string]
+        parallel_nums: 10
+        selected: false
+        start_node_id: 1789468643136start
+        title: 迭代
+        type: iteration
+        width: 992
+      height: 343
+      id: '1789468643136'
+      position:
+        x: 435.9569244446866
+        y: 319.11686076902714
+      positionAbsolute:
+        x: 435.9569244446866
+        y: 319.11686076902714
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 992
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1789468643136start
+      parentId: '1789468643136'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 459.9569244446866
+        y: 387.11686076902714
+      selectable: false
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: key-value-151
+            key: ''
+            type: text
+            value: "{\n  \"query\": \"{{#1789468643136.item#}}\",\n  \"summary\":\
+              \ true,\n  \"count\": 8,\n  \"freshness\": \"oneYear\"\n}"
+          type: json
+        headers: 'Authorization:Bearer sk-3d2293ad83aa4823a7c7ce8dd5ff8c72
+
+          Content-Type:application/json'
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1789468643136'
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 请求
+        type: http-request
+        url: https://api.bocha.cn/v1/web-search
+        variables: []
+      height: 138
+      id: '1789468657523'
+      parentId: '1789468643136'
+      position:
+        x: 141.05825844944184
+        y: 65
+      positionAbsolute:
+        x: 577.0151828941284
+        y: 384.11686076902714
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 1002
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1789468657523'
+          - body
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1789468643136'
+        model:
+          completion_params:
+            temperature: 0.7
+            thinking: false
+          mode: chat
+          name: deepseek-flash
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 8b76c22c-4ec4-4c1b-9706-18d926238686
+          role: system
+          text: '你是一名信息整合助手。下面是搜索引擎针对研究方向返回的若干网页摘要，
+
+            请去除重复与广告内容，提炼出事实要点，并注明来源 URL。
+
+            输出 JSON：
+
+            {"summary": "...", "sources": ["url1", "url2"]}'
+        - id: e4acf3a2-a9a3-4190-bbfd-526624f14f7a
+          role: user
+          text: 研究方向{{#1789468643136.item#}}查询的网页：{{#1789468657523.body#}}
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              summary_json:
+                type: string
+            required: []
+            type: object
+        structured_output_enabled: true
+        title: summary-agent
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1789529850191'
+      parentId: '1789468643136'
+      position:
+        x: 434.59479341998826
+        y: 66.85130164500299
+      positionAbsolute:
+        x: 870.5517178646749
+        y: 385.96816241403013
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 1002
+    - data:
+        outputs:
+        - value_selector:
+          - '1789546098253'
+          - text
+          value_type: string
+          variable: output
+        selected: false
+        title: 输出
+        type: end
+      height: 88
+      id: '1789538678329'
+      position:
+        x: 780.6504372449899
+        y: 936.15915372338
+      positionAbsolute:
+        x: 780.6504372449899
+        y: 936.15915372338
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        advanced_settings:
+          group_enabled: false
+          groups:
+          - groupId: fe48e7a8-e88f-4a37-8104-f2b46e7647ac
+            group_name: Group1
+            output_type: string
+            variables:
+            - - '1789529850191'
+              - text
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1789468643136'
+        output_type: string
+        selected: false
+        title: 变量聚合器
+        type: variable-aggregator
+        variables:
+        - - '1789529850191'
+          - text
+      height: 108
+      id: '1789540245421'
+      parentId: '1789468643136'
+      position:
+        x: 732
+        y: 68
+      positionAbsolute:
+        x: 1167.9569244446866
+        y: 387.11686076902714
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 1002
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1789468643136'
+          - output
+        model:
+          completion_params:
+            temperature: 0.7
+            thinking: false
+          mode: chat
+          name: deepseek-flash
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: b3be4673-6bb5-498d-92d6-76c64d76a388
+          role: system
+          text: 你是一名资深研究报告作者。请基于多个子问题的调研材料，撰写一份中文深度研究报告。
+        - id: f2936cbf-5694-4620-80c1-1e7550eec04b
+          role: user
+          text: '研究主题：{{#1789463494112.research_topic#}}
+
+            研究数据内容：{{#1789547274332.output#}}
+
+
+            根据给定的研究主题和研究数据内容，编写一份关于{{#1789463494112.research_topic#}}的深度研究报告。
+
+            '
+        selected: false
+        title: report-agent
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1789546098253'
+      position:
+        x: 366.3128793809967
+        y: 936.15915372338
+      positionAbsolute:
+        x: 366.3128793809967
+        y: 936.15915372338
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        selected: false
+        template: '{{ arg1 }}'
+        title: 模板转换
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1789468643136'
+          - output
+          value_type: array[string]
+          variable: arg1
+      height: 52
+      id: '1789547274332'
+      position:
+        x: 339.1790702677815
+        y: 756.1167523314043
+      positionAbsolute:
+        x: 339.1790702677815
+        y: 756.1167523314043
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: 220.53385198008806
+      y: 73.36094830312896
+      zoom: 0.43527528164806273
+  rag_pipeline_variables: []

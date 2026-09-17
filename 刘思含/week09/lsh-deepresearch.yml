@@ -1,0 +1,679 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: advanced-chat
+  name: lsh-deepresearch
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/duckduckgo:0.0.13@ae397e4ae1d9d2dc66572d50a4b74b228f0b7a117734db574fe9773cca0c183b
+    version: null
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/tongyi:0.2.21@d467c6df6876dc5e70ad0b10c14631656ebbc904347eadf48e95b4fca7eda001
+    version: null
+kind: app
+version: 0.6.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 20
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        single_chunk_attachment_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: tool
+      id: 1789620309881-source-1789620330188-target
+      selected: false
+      source: '1789620309881'
+      sourceHandle: source
+      target: '1789620330188'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: llm
+      id: 1789620330188-source-llm-target
+      selected: false
+      source: '1789620330188'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: llm-source-answer-target
+      selected: false
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: tool
+      id: 1789620309881-source-1789620816458-target
+      source: '1789620309881'
+      sourceHandle: source
+      target: '1789620816458'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: llm
+      id: 1789620816458-source-llm-target
+      source: '1789620816458'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 用户输入
+        type: start
+        variables: []
+      height: 72
+      id: '1789620309881'
+      position:
+        x: 73
+        y: 261
+      positionAbsolute:
+        x: 73
+        y: 261
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1789620330188'
+          - files
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-v4.1-flash
+          provider: langgenius/tongyi/tongyi
+        prompt_template:
+        - id: 42fed5a7-018d-45aa-aa28-242ed25e161c
+          role: system
+          text: '{{#1789620330188.text#}}{{#1789620330188.files#}}{{#context#}}总结一下搜索到的数据，没有搜索到不许自己输出，每个搜索到的数据在输出中标注出来源的网页'
+        selected: false
+        title: LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: llm
+      position:
+        x: 783
+        y: 282
+      positionAbsolute:
+        x: 783
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        answer: '{{#llm.text#}}'
+        selected: false
+        title: 直接回复
+        type: answer
+        variables: []
+      height: 102
+      id: answer
+      position:
+        x: 1096
+        y: 282
+      positionAbsolute:
+        x: 1096
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The search query.
+            ja_JP: The search query.
+            pt_BR: The search query.
+            zh_Hans: 搜索查询语句。
+          input_schema: null
+          label:
+            en_US: Query string
+            ja_JP: Query string
+            pt_BR: Query string
+            zh_Hans: 查询语句
+          llm_description: Key words for searching
+          max: null
+          min: null
+          name: query
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: 5
+          form: form
+          human_description:
+            en_US: The maximum number of results to return.
+            ja_JP: The maximum number of results to return.
+            pt_BR: The maximum number of results to return.
+            zh_Hans: 最大结果数量
+          input_schema: null
+          label:
+            en_US: Max results
+            ja_JP: Max results
+            pt_BR: Max results
+            zh_Hans: 最大结果数量
+          llm_description: ''
+          max: null
+          min: null
+          name: max_results
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: false
+          form: form
+          human_description:
+            en_US: Whether to pass the search results to llm for summarization.
+            ja_JP: Whether to pass the search results to llm for summarization.
+            pt_BR: Whether to pass the search results to llm for summarization.
+            zh_Hans: 是否需要将搜索结果传给大模型总结
+          input_schema: null
+          label:
+            en_US: Require Summary
+            ja_JP: Require Summary
+            pt_BR: Require Summary
+            zh_Hans: 是否总结
+          llm_description: ''
+          max: null
+          min: null
+          name: require_summary
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: 'Supports http/https/socks proxies. Example: http://user:pass@example.com:3128.'
+            ja_JP: 'Supports http/https/socks proxies. Example: http://user:pass@example.com:3128.'
+            pt_BR: 'Supports http/https/socks proxies. Example: http://user:pass@example.com:3128.'
+            zh_Hans: 支持 http/https/socks 代理。示例：http://user:pass@example.com:3128。
+          input_schema: null
+          label:
+            en_US: Proxy server
+            ja_JP: Proxy server
+            pt_BR: Proxy server
+            zh_Hans: 代理服务器
+          llm_description: ''
+          max: null
+          min: null
+          name: proxy_server
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: 'Comma-separated engines to query, in order. Leave empty to rotate
+              through all of them. Available: duckduckgo, brave, yahoo, google, startpage,
+              mojeek, wikipedia, grokipedia. Pin this to the engines that still answer
+              if this server gets rate-limited.'
+            ja_JP: 'Comma-separated engines to query, in order. Leave empty to rotate
+              through all of them. Available: duckduckgo, brave, yahoo, google, startpage,
+              mojeek, wikipedia, grokipedia. Pin this to the engines that still answer
+              if this server gets rate-limited.'
+            pt_BR: 'Comma-separated engines to query, in order. Leave empty to rotate
+              through all of them. Available: duckduckgo, brave, yahoo, google, startpage,
+              mojeek, wikipedia, grokipedia. Pin this to the engines that still answer
+              if this server gets rate-limited.'
+            zh_Hans: 逗号分隔的搜索引擎列表，按顺序查询。留空则轮询全部引擎。可选：duckduckgo, brave, yahoo, google,
+              startpage, mojeek, wikipedia, grokipedia。当服务器被限流时可固定为仍能返回结果的引擎。
+          input_schema: null
+          label:
+            en_US: Search engines
+            ja_JP: Search engines
+            pt_BR: Search engines
+            zh_Hans: 搜索引擎
+          llm_description: ''
+          max: null
+          min: null
+          name: backend
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          backend: ''
+          max_results: ''
+          proxy_server: ''
+          query: ''
+          require_summary: ''
+        plugin_id: langgenius/duckduckgo
+        plugin_unique_identifier: langgenius/duckduckgo:0.0.13@ae397e4ae1d9d2dc66572d50a4b74b228f0b7a117734db574fe9773cca0c183b
+        provider_icon: /console/api/workspaces/current/plugin/icon?tenant_id=b6a5f03a-421d-42be-a9fe-965cf6fd2c12&filename=3b426bc3266ad6e903fd339dc27870c92db6119f74ef1a78786ef537900ea888.svg
+        provider_icon_dark: /console/api/workspaces/current/plugin/icon?tenant_id=b6a5f03a-421d-42be-a9fe-965cf6fd2c12&filename=95f7d8ee382105eb592c2ce51a3be2810cc93cb25ef3ecf5222eb3fdc1c73c49.svg
+        provider_id: langgenius/duckduckgo/duckduckgo
+        provider_name: langgenius/duckduckgo/duckduckgo
+        provider_show_name: DuckDuckGo
+        provider_type: builtin
+        selected: false
+        title: DuckDuckGo 搜索
+        tool_configurations:
+          backend:
+            type: mixed
+            value: null
+          max_results:
+            type: constant
+            value: 5
+          proxy_server:
+            type: mixed
+            value: null
+          require_summary:
+            type: constant
+            value: true
+        tool_description: 在 DuckDuckGo 上进行搜索并获取结果。
+        tool_label: DuckDuckGo 搜索
+        tool_name: ddgo_search
+        tool_node_version: '2'
+        tool_parameters:
+          query:
+            type: mixed
+            value: '{{#sys.query#}}'
+        type: tool
+      height: 165
+      id: '1789620330188'
+      position:
+        x: 415
+        y: 282
+      positionAbsolute:
+        x: 415
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The search query.
+            ja_JP: The search query.
+            pt_BR: The search query.
+            zh_Hans: 搜索查询语句。
+          input_schema: null
+          label:
+            en_US: Query string
+            ja_JP: Query string
+            pt_BR: Query string
+            zh_Hans: 查询语句
+          llm_description: Key words for searching
+          max: null
+          min: null
+          name: query
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: 3
+          form: form
+          human_description:
+            en_US: The max results.
+            ja_JP: The max results.
+            pt_BR: The max results.
+            zh_Hans: 最大结果数量
+          input_schema: null
+          label:
+            en_US: Max results
+            ja_JP: Max results
+            pt_BR: Max results
+            zh_Hans: 最大结果数量
+          llm_description: ''
+          max: null
+          min: null
+          name: max_results
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: Use when querying results within a specific time range only.
+            ja_JP: Use when querying results within a specific time range only.
+            pt_BR: Use when querying results within a specific time range only.
+            zh_Hans: 只查询一定时间范围内的结果时使用
+          input_schema: null
+          label:
+            en_US: Result time limit
+            ja_JP: Result time limit
+            pt_BR: Result time limit
+            zh_Hans: 结果时间限制
+          llm_description: ''
+          max: null
+          min: null
+          name: timelimit
+          options:
+          - icon: ''
+            label:
+              en_US: current day
+              ja_JP: current day
+              pt_BR: current day
+              zh_Hans: 当天
+            value: Day
+          - icon: ''
+            label:
+              en_US: current week
+              ja_JP: current week
+              pt_BR: current week
+              zh_Hans: 本周
+            value: Week
+          - icon: ''
+            label:
+              en_US: current month
+              ja_JP: current month
+              pt_BR: current month
+              zh_Hans: 当月
+            value: Month
+          - icon: ''
+            label:
+              en_US: current year
+              ja_JP: current year
+              pt_BR: current year
+              zh_Hans: 今年
+            value: Year
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: The size of the image to be searched.
+            ja_JP: The size of the image to be searched.
+            pt_BR: The size of the image to be searched.
+            zh_Hans: 要搜索的图片的大小
+          input_schema: null
+          label:
+            en_US: image size
+            ja_JP: image size
+            pt_BR: image size
+            zh_Hans: 图片大小
+          llm_description: ''
+          max: null
+          min: null
+          name: size
+          options:
+          - icon: ''
+            label:
+              en_US: small
+              ja_JP: small
+              pt_BR: small
+              zh_Hans: 小
+            value: Small
+          - icon: ''
+            label:
+              en_US: medium
+              ja_JP: medium
+              pt_BR: medium
+              zh_Hans: 中
+            value: Medium
+          - icon: ''
+            label:
+              en_US: large
+              ja_JP: large
+              pt_BR: large
+              zh_Hans: 大
+            value: Large
+          - icon: ''
+            label:
+              en_US: xl
+              ja_JP: xl
+              pt_BR: xl
+              zh_Hans: 超大
+            value: Wallpaper
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: 'Supports http/https/socks proxies. Example: http://user:pass@example.com:3128.'
+            ja_JP: 'Supports http/https/socks proxies. Example: http://user:pass@example.com:3128.'
+            pt_BR: 'Supports http/https/socks proxies. Example: http://user:pass@example.com:3128.'
+            zh_Hans: 支持 http/https/socks 代理。示例：http://user:pass@example.com:3128。
+          input_schema: null
+          label:
+            en_US: Proxy server
+            ja_JP: Proxy server
+            pt_BR: Proxy server
+            zh_Hans: 代理服务器
+          llm_description: ''
+          max: null
+          min: null
+          name: proxy_server
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: 'Comma-separated engines to query, in order. Leave empty to rotate
+              through all of them. Available: bing, duckduckgo. Pin this to the engines
+              that still answer if this server gets rate-limited.'
+            ja_JP: 'Comma-separated engines to query, in order. Leave empty to rotate
+              through all of them. Available: bing, duckduckgo. Pin this to the engines
+              that still answer if this server gets rate-limited.'
+            pt_BR: 'Comma-separated engines to query, in order. Leave empty to rotate
+              through all of them. Available: bing, duckduckgo. Pin this to the engines
+              that still answer if this server gets rate-limited.'
+            zh_Hans: 逗号分隔的搜索引擎列表，按顺序查询。留空则轮询全部引擎。可选：bing, duckduckgo。当服务器被限流时可固定为仍能返回结果的引擎。
+          input_schema: null
+          label:
+            en_US: Search engines
+            ja_JP: Search engines
+            pt_BR: Search engines
+            zh_Hans: 搜索引擎
+          llm_description: ''
+          max: null
+          min: null
+          name: backend
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          backend: ''
+          max_results: ''
+          proxy_server: ''
+          query: ''
+          size: ''
+          timelimit: ''
+        plugin_id: langgenius/duckduckgo
+        plugin_unique_identifier: langgenius/duckduckgo:0.0.13@ae397e4ae1d9d2dc66572d50a4b74b228f0b7a117734db574fe9773cca0c183b
+        provider_icon: /console/api/workspaces/current/plugin/icon?tenant_id=b6a5f03a-421d-42be-a9fe-965cf6fd2c12&filename=3b426bc3266ad6e903fd339dc27870c92db6119f74ef1a78786ef537900ea888.svg
+        provider_icon_dark: /console/api/workspaces/current/plugin/icon?tenant_id=b6a5f03a-421d-42be-a9fe-965cf6fd2c12&filename=95f7d8ee382105eb592c2ce51a3be2810cc93cb25ef3ecf5222eb3fdc1c73c49.svg
+        provider_id: langgenius/duckduckgo/duckduckgo
+        provider_name: langgenius/duckduckgo/duckduckgo
+        provider_show_name: DuckDuckGo
+        provider_type: builtin
+        selected: false
+        title: DuckDuckGo 图片搜索
+        tool_configurations:
+          backend:
+            type: mixed
+            value: null
+          max_results:
+            type: constant
+            value: 3
+          proxy_server:
+            type: mixed
+            value: null
+          size:
+            type: constant
+            value: null
+          timelimit:
+            type: constant
+            value: null
+        tool_description: 在 DuckDuckGo 上进行图片搜索并获取结果。
+        tool_label: DuckDuckGo 图片搜索
+        tool_name: ddgo_img
+        tool_node_version: '2'
+        tool_parameters:
+          query:
+            type: mixed
+            value: '{{#sys.query#}}'
+        type: tool
+      height: 191
+      id: '1789620816458'
+      position:
+        x: 415
+        y: 486
+      positionAbsolute:
+        x: 415
+        y: 486
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    viewport:
+      x: 308.5
+      y: 277
+      zoom: 1
+  rag_pipeline_variables: []
