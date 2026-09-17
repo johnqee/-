@@ -1,0 +1,577 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: workflow
+  name: deepresearch
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/tongyi:0.2.21@d467c6df6876dc5e70ad0b10c14631656ebbc904347eadf48e95b4fca7eda001
+    version: null
+kind: app
+version: 0.7.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 50
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        knowledge_file_size_limit: 15
+        single_chunk_attachment_limit: 10
+        skill_file_size_limit: 50
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1789614580335-source-1789614470605-target
+      source: '1789614580335'
+      sourceHandle: source
+      target: '1789614470605'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: iteration
+      id: 1789614470605-source-1789616092617-target
+      source: '1789614470605'
+      sourceHandle: source
+      target: '1789616092617'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1789616092617'
+        sourceType: iteration-start
+        targetType: http-request
+      id: 1789616092617start-source-1789616164916-target
+      source: 1789616092617start
+      sourceHandle: source
+      target: '1789616164916'
+      targetHandle: target
+      type: custom
+      zIndex: 1001
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1789616092617'
+        sourceType: http-request
+        targetType: llm
+      id: 1789616164916--1789618538416-target
+      source: '1789616164916'
+      sourceHandle: source
+      target: '1789618538416'
+      targetHandle: target
+      type: custom
+      zIndex: 1001
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: iteration
+        targetType: llm
+      id: 1789616092617-source-1789618731932-target
+      source: '1789616092617'
+      sourceHandle: source
+      target: '1789618731932'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1789618731932-source-1789618781081-target
+      source: '1789618731932'
+      sourceHandle: source
+      target: '1789618781081'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1789614580335'
+          - query
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: qwen3.7-plus
+          provider: langgenius/tongyi/tongyi
+        prompt_template:
+        - id: 91b91492-0d39-46cd-a3fa-5550530962f2
+          role: system
+          text: '你是一名研究任务规划助手。
+
+
+            用户的研究问题：
+
+            {{#1789614580335.query#}}
+
+
+            请将该问题拆分为 3～5 个可以通过互联网搜索独立调查的子问题。
+
+
+            要求：
+
+            - 子问题之间尽量减少重复。
+
+            - 子问题共同覆盖原问题的关键方面。
+
+            - 每一个子问题都应该适合作为搜索引擎查询。
+
+            - 如果问题涉及时间、人物、产品、组织等信息，保留必要的限定条件。
+
+            - 不要回答问题，只负责拆解研究任务。'
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              queries:
+                description: 将用户原始研究问题拆分得到的搜索子问题列表
+                items:
+                  type: string
+                maxItems: 5
+                minItems: 3
+                type: array
+            required:
+            - queries
+            type: object
+        structured_output_enabled: true
+        title: LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: '1789614470605'
+      position:
+        x: 393.13851897026086
+        y: 373
+      positionAbsolute:
+        x: 393.13851897026086
+        y: 373
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+      zIndex: 0
+    - data:
+        selected: false
+        title: 用户输入
+        type: start
+        variables:
+        - default: ''
+          hint: ''
+          label: query
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: query
+      height: 108
+      id: '1789614580335'
+      position:
+        x: 132
+        y: 352
+      positionAbsolute:
+        x: 132
+        y: 352
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        error_handle_mode: terminated
+        flatten_output: true
+        height: 224
+        is_parallel: false
+        iterator_input_type: object
+        iterator_selector:
+        - '1789614470605'
+        - structured_output
+        - queries
+        output_selector:
+        - '1789616164916'
+        - body
+        output_type: array[string]
+        parallel_nums: 10
+        selected: false
+        start_node_id: 1789616092617start
+        title: 迭代
+        type: iteration
+        width: 686
+      height: 224
+      id: '1789616092617'
+      position:
+        x: 732.031433133021
+        y: 373
+      positionAbsolute:
+        x: 732.031433133021
+        y: 373
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 686
+      zIndex: 0
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1789616092617start
+      parentId: '1789616092617'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 756.031433133021
+        y: 441
+      selectable: false
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1001
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: key-value-334
+            key: ''
+            type: text
+            value: "{\n  \"query\": {{#1789616092617.item#}},\n  \"summary\": true,\n\
+              \  \"freshness\": \"noLimit\",\n  \"count\": 5\n}"
+          type: json
+        headers: 'Authorization:Bearer sk-3d2293ad83aa4823a7c7ce8dd5ff8c72
+
+          Content-Type:application/json'
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1789616092617'
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 请求
+        type: http-request
+        url: https://api.bocha.cn/v1/web-search
+        variables: []
+      height: 136
+      id: '1789616164916'
+      parentId: '1789616092617'
+      position:
+        x: 128
+        y: 66.85130164500299
+      positionAbsolute:
+        x: 860.031433133021
+        y: 439.851301645003
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+      zIndex: 1001
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1789616092617'
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: qwen3.7-plus
+          provider: langgenius/tongyi/tongyi
+        prompt_template:
+        - id: 2d54f20c-4626-4516-8118-a44b4c89016d
+          role: system
+          text: '你是一名研究助手。
+
+
+            当前研究子问题：
+
+            {{#1789616092617.item#}}
+
+
+            以下是搜索引擎返回的网页搜索结果：
+
+            {{#1789616164916.body#}}
+
+
+            请根据这些搜索结果整理这个子问题的研究笔记。
+
+
+            要求：
+
+
+            1. 只基于提供的搜索结果，不要凭空补充事实。
+
+            2. 提取与子问题最相关的事实、数据、观点和事件。
+
+            3. 合并多个网页中的重复信息。
+
+            4. 如果不同来源存在冲突，明确指出差异。
+
+            5. 尽可能保留来源名称和 URL，方便最终报告引用。
+
+            6. 不需要回答整个研究问题，只总结当前这个子问题。
+
+
+            输出格式：
+
+
+            ## 子问题
+
+            ...
+
+
+            ## 关键发现
+
+            - ...
+
+            - ...
+
+            - ...
+
+
+            ## 来源
+
+            - [网页标题](URL)
+
+            - [网页标题](URL)'
+        selected: false
+        title: LLM 2
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: '1789618538416'
+      parentId: '1789616092617'
+      position:
+        x: 429
+        y: 66.85130164500299
+      positionAbsolute:
+        x: 1161.031433133021
+        y: 439.851301645003
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+      zIndex: 1001
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: qwen3.7-plus
+          provider: langgenius/tongyi/tongyi
+        prompt_template:
+        - id: ae3abba8-4978-47e5-899b-c0a90a0664a4
+          role: system
+          text: '你是一名专业研究报告撰写助手。
+
+
+            用户最初的问题：
+
+            {{#1789614580335.query#}}
+
+
+            下面是针对这个问题进行多路网页搜索后得到的研究笔记：
+
+
+            {{#1789616092617.output#}}
+
+
+            请综合这些材料生成一份完整的研究报告。
+
+
+            要求：
+
+
+            1. 首先直接回答用户的核心问题。
+
+            2. 对来自不同搜索任务的信息进行整合，而不是逐条机械拼接。
+
+            3. 删除重复信息。
+
+            4. 区分事实、数据和不同来源的观点。
+
+            5. 不要加入研究材料中不存在的具体事实。
+
+            6. 如果证据不足或来源之间存在冲突，需要明确说明。
+
+            7. 尽可能保留关键来源链接。
+
+            8. 使用 Markdown。
+
+
+            报告格式：
+
+
+            # 研究报告：{主题}
+
+
+            ## 一、结论摘要
+
+
+            用 3～5 条概括最重要的研究结论。
+
+
+            ## 二、背景
+
+
+            简要说明问题背景。
+
+
+            ## 三、主要发现
+
+
+            根据内容自然划分多个小节。
+
+
+            ## 四、综合分析
+
+
+            对前面的信息进行归纳和比较。
+
+
+            ## 五、局限性
+
+
+            说明当前搜索结果的信息不足、时效性或不确定性。
+
+
+            ## 参考来源
+
+
+            列出研究过程中使用的重要网页及链接。'
+        selected: false
+        title: LLM 3
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: '1789618731932'
+      position:
+        x: 1471.968566866979
+        y: 373
+      positionAbsolute:
+        x: 1471.968566866979
+        y: 373
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+      zIndex: 0
+    - data:
+        outputs:
+        - value_selector:
+          - '1789618731932'
+          - text
+          value_type: string
+          variable: text
+        selected: false
+        title: 输出
+        type: end
+      height: 87
+      id: '1789618781081'
+      position:
+        x: 1776
+        y: 373
+      positionAbsolute:
+        x: 1776
+        y: 373
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+      zIndex: 0
+    viewport:
+      x: -188.88387024887447
+      y: 84.02686525021613
+      zoom: 1.0000000000000002
+  rag_pipeline_variables: []
