@@ -1,0 +1,94 @@
+{
+  "topic": "2026 年国内大模型 Agent 开发框架对比",
+  "started_at": "2026-10-04T09:55:30",
+  "finished_at": "2026-10-04T09:57:59",
+  "model": "deepseek-flash",
+  "max_rounds": 3,
+  "rounds": [
+    {
+      "round": 1,
+      "queries": [
+        "2026 国内 Agent 开发框架 盘点 主流",
+        "国产 大模型 Agent 框架 对比 2026 排名",
+        "China LLM agent framework landscape 2026 open source",
+        "Agent 框架 多智能体编排 工具调用 记忆 能力对比",
+        "agent framework multi-agent orchestration tool calling memory comparison",
+        "LangGraph AutoGen Dify 对比 国内 Agent 框架 架构",
+        "Agent 框架 国产大模型 适配 通义 文心 DeepSeek 兼容性",
+        "agent framework deployment performance cost benchmark China 2026",
+        "Agent 框架 GitHub star 社区活跃度 私有化部署 对比",
+        "企业 Agent 框架 选型 建议 2026 评估维度",
+        "Agent 开发框架 落地案例 金融 制造 行业应用",
+        "enterprise agent framework selection criteria China 2026 case study"
+      ],
+      "pages_read": [],
+      "extracted_points": 23,
+      "gap_judgment": {
+        "sufficient": false,
+        "gaps": [
+          "缺少国内主流Agent开发框架的完整清单和详细对比，如Dify、Coze、阿里云百炼、腾讯元器、Spring AI Alibaba、AgentScope、Qwen-Agent、MetaGPT、ModelScope-Agent、百度千帆等的产品定位、开源/商业化形态与核心功能模块",
+          "缺少这些国内框架与国产大模型（通义千问、文心一言、智谱、DeepSeek、Kimi、百川等）适配程度的具体对比信息",
+          "缺少国内框架在部署与工程化能力（私有化、本地化、性能与成本）上的具体数据和横向对比",
+          "缺少国内框架在可观测性与评测能力、生态社区活跃度（GitHub Stars、社区、文档）方面的系统对比",
+          "缺少基于国内框架的企业选型建议和典型落地案例，以及各框架局限与未来演进方向的针对性分析"
+        ],
+        "new_queries": [
+          "2026 国内 Agent 开发框架 对比 Dify Coze 阿里云百炼 Spring AI Alibaba",
+          "国产大模型 Agent 框架 适配 通义千问 文心一言 智谱 DeepSeek",
+          "Agent 框架 私有化部署 成本 性能 对比 国内",
+          "Agent 框架 可观测性 评测 能力 对比 国内"
+        ]
+      }
+    },
+    {
+      "round": 2,
+      "queries": [
+        "2026 国内 Agent 开发框架 对比 Dify Coze 阿里云百炼 Spring AI Alibaba",
+        "国产大模型 Agent 框架 适配 通义千问 文心一言 智谱 DeepSeek",
+        "Agent 框架 私有化部署 成本 性能 对比 国内",
+        "Agent 框架 可观测性 评测 能力 对比 国内"
+      ],
+      "pages_read": [],
+      "extracted_points": 22,
+      "gap_judgment": {
+        "sufficient": false,
+        "gaps": [
+          "现有信息主要覆盖国际主流框架（LangGraph、Claude Agent SDK、OpenAI Agents SDK等），对国内主流Agent开发框架（如阿里云百炼、百度千帆AgentBuilder、腾讯元器、字节扣子/Coze、智谱、Dify、FastGPT、RAGFlow、BISHENG、MaxKB等）的完整清单、产品定位、开源/商业化形态及核心功能模块缺乏系统对比。",
+          "国内框架在关键技术架构能力上的具体对比不足，包括多智能体编排机制、工具/函数调用、记忆管理、工作流与状态控制、可观测性与评测能力等，现有信息多为通用性描述或国际框架细节。",
+          "国内框架与国产大模型（通义千问、文心一言、智谱GLM、DeepSeek、Kimi、豆包等）的适配程度、私有化部署能力、性能与成本、生态与社区活跃度的具体对比数据缺失。",
+          "面向国内企业场景的选型建议、典型落地案例以及各国内框架的局限与未来演进方向信息不充分，现有案例多为国际或泛化案例。"
+        ],
+        "new_queries": []
+      }
+    }
+  ],
+  "pages_fetched": 0,
+  "validation": {
+    "passed": true,
+    "problems": [],
+    "rewrote_once": false
+  },
+  "output_dir": null,
+  "sub_questions": [
+    "2026 年国内主流大模型 Agent 开发框架有哪些：各自的产品定位、开源/商业化形态与核心功能模块（如工作流编排、多智能体协作、工具调用、记忆与 RAG）",
+    "这些框架在关键技术与架构能力上的对比：多智能体编排机制、工具/函数调用、记忆管理、工作流与状态控制、可观测性与评测能力",
+    "与国产大模型的适配程度、部署与工程化能力（本地化、私有化部署、性能与成本）、以及生态与社区活跃度的对比",
+    "面向不同场景的企业选型建议与典型落地案例，以及各家框架的局限与未来演进方向"
+  ],
+  "plan_queries": [
+    "2026 国内 Agent 开发框架 盘点 主流",
+    "国产 大模型 Agent 框架 对比 2026 排名",
+    "China LLM agent framework landscape 2026 open source",
+    "Agent 框架 多智能体编排 工具调用 记忆 能力对比",
+    "agent framework multi-agent orchestration tool calling memory comparison",
+    "LangGraph AutoGen Dify 对比 国内 Agent 框架 架构",
+    "Agent 框架 国产大模型 适配 通义 文心 DeepSeek 兼容性",
+    "agent framework deployment performance cost benchmark China 2026",
+    "Agent 框架 GitHub star 社区活跃度 私有化部署 对比",
+    "企业 Agent 框架 选型 建议 2026 评估维度",
+    "Agent 开发框架 落地案例 金融 制造 行业应用",
+    "enterprise agent framework selection criteria China 2026 case study"
+  ],
+  "sources_total": 146,
+  "sources_cited": 50
+}
